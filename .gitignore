@@ -9,4 +9,4 @@ dnspy/res/dnspyre*
 dnspy/dnspy_result_*
 dnspy/dnspy*
 
-*.bak
+*.bak.*

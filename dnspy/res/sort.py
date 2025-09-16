@@ -1,49 +1,56 @@
-# Remove duplicates and sort after adding new DNS servers
 import shutil
+from datetime import datetime
+from typing import List
 
-shutil.copyfile("providers.txt", "providers.txt.bak")
 
-lines = []
-with open("providers.txt") as f:
+
+shutil.copyfile("domains.txt", f"domains-{datetime.now().strftime('%Y%m%d%H%M%S')}.bak.txt")
+with open("domains.txt", "r") as f:
     lines = f.readlines()
-    # Remove empty lines
-    lines = [line for line in lines if line.strip()]
-    # Remove duplicates
-    # lines = list(set(lines))
 
-split_lines = [line for line in lines if line.startswith("#")]
-sections = []
-current_section = set()
-new_lines = list()
+lines_set = set(lines)
+lines = list(lines_set)
+lines.sort()
 
-if len(split_lines) < 1:
-    new_lines = lines
+with open("domains.txt", "w") as f:
+    f.writelines(lines)
+
+
+
+shutil.copy("providers.txt", f"providers-{datetime.now().strftime('%Y%m%d%H%M%S')}.bak.txt")
+with open("providers.txt", "r") as f:
+    lines = f.readlines()
+
+all_hosts = list()
+class HostList:
+    def __init__(self, name:str):
+        self.name = name
+        self.hosts = list[str]()
+
+host_datasets = list[HostList]()
+if lines[0].startswith("#"):
+    dataset = HostList(name = lines[0].strip("#").strip())
+    host_datasets.append(dataset)
+    lines = lines[1:]
 else:
-    for line in lines:
-        if not line.startswith("#"):
-            current_section.update([line])
-        else:
-            if sections:
-                new_lines.append(sections)
-            current_section_list = list(current_section)
-            current_section_list.sort()
-            new_lines.extend(current_section)
-            sections = line
-            current_section = set()
+    dataset = HostList(name = "Default")
+    host_datasets.append(dataset)
 
-    # push the last section
-    new_lines.append(sections)
-    current_section_list = list(current_section)
-    current_section_list.sort()
-    new_lines.extend(current_section)
-
-
-for i in range(len(new_lines)):
-    if new_lines[i].startswith("#"):
-        new_lines[i] = "\n" + new_lines[i] + "\n"
-
-result = "".join(new_lines)
-
+for line in lines:
+    if line.startswith("#"):
+        dataset = HostList(name = line.strip("#").strip())
+        host_datasets.append(dataset)
+    else:
+        host = line.strip()
+        if host and (host not in all_hosts):
+            all_hosts.append(host)
+            host_datasets[-1].hosts.append(host)
 
 with open("providers.txt", "w") as f:
-    f.writelines(new_lines)
+    for dataset in host_datasets:
+        f.write(f"# {dataset.name}\n")
+        f.write("\n")
+        dataset.hosts.sort()
+        lines = "\n".join(dataset.hosts)
+        f.write(lines)
+        f.write("\n")
