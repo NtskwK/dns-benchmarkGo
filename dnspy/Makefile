@@ -1,8 +1,16 @@
 # 默认目标
 all: run
 
+build-frontend:
+	@echo "正在构建前端"
+	cd web
+	pnpm install
+	pnpm build
+	cd ..
+
 # 构建目标
 build: 
+	build-frontend
 	@echo "正在构建..."
 	go mod tidy
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-darwin-amd64 .
