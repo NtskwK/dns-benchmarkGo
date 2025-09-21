@@ -56,7 +56,9 @@ with open("providers.txt", "w", encoding="utf-8") as f:
     for dataset in host_datasets:
         f.write(f"# {dataset.name}\n")
         f.write("\n")
-        dataset.hosts.sort()
-        write_lines = "\n".join(dataset.hosts)
-        f.write(write_lines)
-        f.write("\n")
+        ds = dataset.hosts
+        if ds:
+            ds.sort()
+            write_lines = "\n".join(ds)
+            f.write(write_lines)
+            f.write("\n\n")
