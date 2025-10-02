@@ -1,10 +1,17 @@
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
+import { defineConfig } from "@rsbuild/core";
+import { pluginReact } from "@rsbuild/plugin-react";
 
 export default defineConfig({
   plugins: [pluginReact()],
   html: {
-    title: 'DNSPY Dashboard',
+    title: "DNSPY Dashboard",
+  },
+  output: {
+    filenameHash: false,
+  },
+  performance: {
+    chunkSplit: {
+      strategy: "all-in-one",
+    },
   },
 });
-
