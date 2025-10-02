@@ -43,6 +43,28 @@ export function FileProvider({ children }) {
     });
   }, [t]);
 
+  // Check for preloaded data from server
+  useEffect(() => {
+    const checkPreloadedData = async () => {
+      try {
+        const response = await fetch('/api/preload');
+        const result = await response.json();
+        
+        if (result.data && !jsonData) {
+          setJsonData(result.data);
+          showToast('success', 'tip.data_loaded', 'tip.preloaded_data_desc');
+          hasShownInitialToast.current = true;
+        }
+      } catch (error) {
+        console.log("No preloaded data available");
+      }
+    };
+
+    if (!jsonData && !hasShownInitialToast.current) {
+      checkPreloadedData();
+    }
+  }, [jsonData, showToast]);
+
   useEffect(() => {
     if (jsonData) {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(jsonData));

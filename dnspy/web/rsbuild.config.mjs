@@ -4,7 +4,7 @@ import { pluginReact } from "@rsbuild/plugin-react";
 export default defineConfig({
   plugins: [pluginReact()],
   html: {
-    title: "DNSPY Dashboard",
+    title: "DNS-BenchGo",
   },
   output: {
     filenameHash: false,
@@ -15,3 +15,4 @@ export default defineConfig({
     },
   },
 });
+
