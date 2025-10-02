@@ -14,6 +14,9 @@ importers:
       chart.js:
         specifier: ^4.4.6
         version: 4.4.6
+      corepack:
+        specifier: ^0.34.0
+        version: 0.34.0
       framer-motion:
         specifier: ^11.11.10
         version: 11.11.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1370,6 +1373,11 @@ packages:
 
   core-js@3.38.1:
     resolution: {integrity: sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==}
+
+  corepack@0.34.0:
+    resolution: {integrity: sha512-8D9N/k9hDjoISCDGUzH2wBF0fJD49p3G7ifoEZcc0vhB7Py6r+Mc1SpJ8dvnWY/HMP95K60WkQbN7vgbUgXgpA==}
+    engines: {node: ^20.10.0 || ^22.11.0 || >=24.0.0}
+    hasBin: true
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -4118,6 +4126,8 @@ snapshots:
   compute-scroll-into-view@3.1.0: {}
 
   core-js@3.38.1: {}
+
+  corepack@0.34.0: {}
 
   cross-spawn@7.0.3:
     dependencies:

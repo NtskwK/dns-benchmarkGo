@@ -1,4 +1,4 @@
-package web
+package main
 
 import (
 	"bytes"
@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/http"
 )
-
-const distRoot = "./web/dist"
 
 //go:embed web/dist/index.html
 var indexHTML []byte
@@ -34,16 +32,15 @@ func modifiedIndexHTML() []byte {
 
 func findSafePort(start, end int) (int, error) {
 	for port := start; port <= end; port++ {
-		ln, err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+		err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 		if err == nil {
-			ln.Close()
 			return port, nil
 		}
 	}
 	return 0, fmt.Errorf("no available port found")
 }
 
-func serve() {
+func serve() error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			w.Header().Set("Content-Type", "text/html")
@@ -58,9 +55,9 @@ func serve() {
 	port, err := findSafePort(8000, 8080)
 	if err != nil {
 		fmt.Println("Error finding available port:", err)
-		return
+		return err
 	}
 
 	fmt.Println("Server starting on :%d", port)
-	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
