@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"bytes"
@@ -32,7 +32,18 @@ func modifiedIndexHTML() []byte {
 	return modifiedIndexHTML
 }
 
-func main() {
+func findSafePort(start, end int) (int, error) {
+	for port := start; port <= end; port++ {
+		ln, err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+		if err == nil {
+			ln.Close()
+			return port, nil
+		}
+	}
+	return 0, fmt.Errorf("no available port found")
+}
+
+func serve() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			w.Header().Set("Content-Type", "text/html")
@@ -44,6 +55,12 @@ func main() {
 		fs.ServeHTTP(w, r)
 	})
 
-	fmt.Println("Server starting on :8000")
-	http.ListenAndServe(":8000", nil)
+	port, err := findSafePort(8000, 8080)
+	if err != nil {
+		fmt.Println("Error finding available port:", err)
+		return
+	}
+
+	fmt.Println("Server starting on :%d", port)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
