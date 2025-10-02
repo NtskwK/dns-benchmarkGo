@@ -1,17 +1,14 @@
-# 默认目标
 all: run
 
 build-frontend:
-	@echo "正在构建前端"
+	@echo building frontend...
 	cd web
 	pnpm install
 	pnpm build
 	cd ..
 
-# 构建目标
-build: 
-	build-frontend
-	@echo "正在构建..."
+build: build-frontend
+	@echo building dnsbenchmark...
 	go mod tidy
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-darwin-amd64 .
 	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -tags release -o dnspy-darwin-arm64 .
@@ -20,25 +17,20 @@ build:
 	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-windows-amd64.exe .
 	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -tags release -o dnspy-windows-arm64.exe .
 
-# 运行目标
 run:
-	@echo "正在运行..."
 	go run .
 
-# 更新地理数据
 update-geodata:
-	@echo "正在更新地理数据..."
+	@echo updating geolocation data...
 	curl https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb -o ./res/Country.mmdb
 
-# 更新域名数据
 update-domains:
-	@echo "正在更新域名数据..."
+	@echo updating domain data...
 	curl https://cdn.jsdelivr.net/gh/Tantalor93/dnspyre@master/data/10000-domains -o ./res/domains.txt
 
-# 更新 dnspyre 可执行文件
 configuration:
-	@echo "正在更新 dnspyre 可执行文件..."
-	@echo "请勿修改使用的 dnspyre 版本号,否则会导致 dnspy 无法正常运行"
+	@echo updating dnspyre executable...
+	@echo please do not modify the dnspyre version number in use, otherwise dnspy may not function properly
 	go get github.com/tantalor93/dnspyre/v3@latest
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o ./res/dnspyre-darwin-amd64 github.com/tantalor93/dnspyre/v3
 	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -o ./res/dnspyre-darwin-arm64 github.com/tantalor93/dnspyre/v3
