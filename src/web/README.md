@@ -1,7 +1,5 @@
 # Rsbuild project
 
-refer: https://github.com/xxnuo/dns-benchmark
-
 Install the dependencies:
 
 ```bash
