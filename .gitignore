@@ -3,10 +3,10 @@
 /ref
 /data
 /geo
-./dnspy/dnspy
-dnspy/res/dnspyre*
+src/dnspy
+src/res/dnspyre*
 
-dnspy/dnspy_result_*
-dnspy/dnspy*
+src/dnspy_result_*
+src/dnspy*
 
 *.bak.*
