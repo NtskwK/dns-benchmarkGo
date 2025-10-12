@@ -3,9 +3,7 @@
 /ref
 /data
 /geo
-src/dnspy
 
 src/dnspy_result_*
-src/dnspy*
 
 *.bak.*
