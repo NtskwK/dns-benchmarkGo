@@ -1,0 +1,3 @@
+[submodule "src/dnspyre"]
+	path = src/dnspyre
+	url = https://github.com/Tantalor93/dnspyre

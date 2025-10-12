@@ -47,9 +47,6 @@ func serve() error {
 			w.Write(modifiedIndexHTML())
 			return
 		}
-		// Serve static files
-		fs := http.FileServer(http.Dir(distRoot))
-		fs.ServeHTTP(w, r)
 	})
 
 	port, err := findSafePort(8000, 8080)
