@@ -4,7 +4,6 @@
 /data
 /geo
 src/dnspy
-src/res/dnspyre*
 
 src/dnspy_result_*
 src/dnspy*
