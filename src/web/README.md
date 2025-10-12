@@ -1,6 +1,6 @@
 # Rsbuild project
 
-## Setup
+refer: https://github.com/xxnuo/dns-benchmark
 
 Install the dependencies:
 

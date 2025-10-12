@@ -10,6 +10,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
     "chart.js": "^4.4.6",
+    "corepack": "^0.34.0",
     "framer-motion": "^11.11.10",
     "i18next": "^23.16.4",
     "i18next-browser-languagedetector": "^8.0.0",

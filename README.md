@@ -2,7 +2,7 @@
 
 [English](./README.en.md) | [中文](./README.md)
 
-苦于国内的 DNS 被运营商劫持插入各种广告，并且有一些隐私问题，需要可靠的服务来支持我们正常安全的上网。
+苦于国内的 DNS 被运营商劫持，需要可靠的服务来支持正常的上网。
 
 现有的工具不多，有 dnsjumper 存在仅支持 Windows、数据源较少、评测维度少的问题
 
@@ -12,7 +12,7 @@
 
 使用方法：按下文指导下载测试工具获得测试结果的 json 文件，打开分析面板网站上传数据分析即可。网站不存储数据。
 
-### 数据分析面板预览
+## 数据分析面板预览
 
 ![数据分析面板预览](https://github.com/user-attachments/assets/c743f7ba-4d77-4d16-8515-02c0dc99ddfa)
 
@@ -22,7 +22,7 @@
 
 ![dnspy](https://github.com/user-attachments/assets/a499d2fc-ffcd-4b71-a0dd-d6e5839792dd)
 
-在本仓库的 [releases](https://github.com/xxnuo/dns-benchmark/releases) 页面中按你的系统架构下载 `dnspy-*` 文件，比如我的是 M系列处理器的 macOS，所以下载 `dnspy-darwin-arm64` 文件。
+在本仓库的 [releases](https://github.com/xxnuo/dns-benchmark/releases) 页面中按你的系统架构下载 `dnspy-*` 文件，比如 M 系列处理器的 macOS，所以下载 `dnspy-darwin-arm64` 文件。
 
 然后**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
 然后**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
@@ -43,6 +43,20 @@ unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
 测试完成后会输出到当前目录下形如 `dnspy_result_2024-11-07-17-32-13.json` 的 JSON 文件中。
 
 按程序提示输入 `Y` 或 `y` 或直接回车，会自动打开数据分析面板网站，点击网站右上角的 `读取分析` 按钮，选择你刚才的 JSON 文件，就可以看到可视化测试结果了。
+
+### 源码模式下运行
+
+#### 1. 配置依赖
+
+  ```bash
+  make configuration
+  ```
+
+#### 2. 运行
+
+  ```bash
+  go run .
+  ```
 
 ## 可用参数
 
@@ -117,55 +131,35 @@ dnspy dnspy_benchmark_2024-10-22-08-18.json
 > 'GOOS' is not recognized as an internal or external command,
 operable program or batch file.
 
-编译过程：
+### 编译过程
 
-1. 克隆本仓库 
+#### 1. 克隆本仓库
 
-```bash
-# 克隆本仓库
-git clone https://github.com/xxnuo/dns-benchmark.git
-cd dns-benchmark/dnspy
-```
+  ```bash
+  # 克隆本仓库
+  git clone https://github.com/xxnuo/dns-benchmark.git
+  cd dns-benchmark/dnspy
+  ```
 
-2. 更新数据文件（可选）
+#### 2. 更新数据文件（可选）
 
-```bash
-# 更新所有
-make update
+  ```bash
+  # 更新所有
+  make update 
+  # 更新geodata
+  make update-geodata 
+  # 更新测试用域名
+  make update-domains
+  ```
 
-# 更新geodata
-make update-geodata
+#### 3. 配置依赖
 
-# 更新测试用域名
-make update-domains
-```
+  ```bash
+  make configuration
+  ```
 
-3. 配置依赖
+#### 4. 进行编译
 
-```bash
-make configuration
-```
-
-4. 进行编译
-
-```bash
-make build
-```
-
-## 源码模式下运行
-
-1. 配置依赖
-
-```bash
-make configuration
-```
-
-2. 运行
-
-```bash
-go run .
-```
-
-## License
-
-Unkonw. There is no license in the repo of upstream.
+  ```bash
+  make build
+  ```
