@@ -46,15 +46,21 @@ func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, doma
 	queries := []string{"@" + domainsPath}
 
 	bench := &dnsbench.Benchmark{
-		Server:      server,
-		Types:       queryTypes,
-		Duration:    time.Duration(duration) * time.Second,
-		Concurrency: uint32(concurrency),
-		Probability: probability,
-		Queries:     queries,
-		Count:       0, // 使用 Duration 模式
-		Silent:      true,
-		JSON:        true,
+		Server:         server,
+		Types:          queryTypes,
+		Duration:       time.Duration(duration) * time.Second,
+		Concurrency:    uint32(concurrency),
+		Probability:    probability,
+		Queries:        queries,
+		Count:          0, // 使用 Duration 模式
+		Silent:         true,
+		JSON:           true,
+		Recurse:        true,
+		Edns0:          1232,
+		RequestTimeout: 5 * time.Second,
+		ConnectTimeout: 1 * time.Second,
+		ReadTimeout:    3 * time.Second,
+		WriteTimeout:   1 * time.Second,
 	}
 
 	log.WithFields(log.Fields{
