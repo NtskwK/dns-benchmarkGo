@@ -46,10 +46,17 @@ Enter `Y` or `y` or just press Enter as prompted by the program, and the data an
 
 ### Running in Source Code Mode
 
-#### 1. Configure Dependencies
+#### 1. Clone repository and initialize submodules
 
   ```bash
-  make configuration
+  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  cd dns-benchmark/src
+  ```
+
+  If you have already cloned the repository, use the following command to initialize submodules:
+
+  ```bash
+  git submodule update --init --recursive
   ```
 
 #### 2. Run
@@ -133,12 +140,19 @@ operable program or batch file.
 
 ### Compilation Process
 
-#### 1. Clone this repository
+#### 1. Clone repository and initialize submodules
 
   ```bash
-  # Clone this repository
-  git clone https://github.com/xxnuo/dns-benchmark.git
-  cd dns-benchmark/dnspy
+  # Clone this repository (including submodules)
+  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  cd dns-benchmark/src
+  ```
+
+  If you have already cloned the repository, use the following command to initialize submodules:
+
+  ```bash
+  git submodule update --init --recursive
+  cd src
   ```
 
 #### 2. Update data files (optional)
@@ -150,15 +164,11 @@ operable program or batch file.
   make update-geodata 
   # Update test domains
   make update-domains
+  # Update dnspyre submodule
+  make update-dnspyre
   ```
 
-#### 3. Configure dependencies
-
-  ```bash
-  make configuration
-  ```
-
-#### 4. Compile
+#### 3. Compile
 
   ```bash
   make build

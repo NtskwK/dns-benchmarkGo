@@ -46,10 +46,17 @@ unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
 
 ### 源码模式下运行
 
-#### 1. 配置依赖
+#### 1. 克隆本仓库并初始化子模块
 
   ```bash
-  make configuration
+  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  cd dns-benchmark/src
+  ```
+
+  如果已经克隆了仓库，可以使用以下命令初始化子模块：
+
+  ```bash
+  git submodule update --init --recursive
   ```
 
 #### 2. 运行
@@ -133,12 +140,19 @@ operable program or batch file.
 
 ### 编译过程
 
-#### 1. 克隆本仓库
+#### 1. 克隆本仓库并初始化子模块
 
   ```bash
-  # 克隆本仓库
-  git clone https://github.com/xxnuo/dns-benchmark.git
-  cd dns-benchmark/dnspy
+  # 克隆本仓库（包含子模块）
+  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  cd dns-benchmark/src
+  ```
+
+  如果已经克隆了仓库，可以使用以下命令初始化子模块：
+
+  ```bash
+  git submodule update --init --recursive
+  cd src
   ```
 
 #### 2. 更新数据文件（可选）
@@ -150,15 +164,11 @@ operable program or batch file.
   make update-geodata 
   # 更新测试用域名
   make update-domains
+  # 更新 dnspyre 子模块
+  make update-dnspyre
   ```
 
-#### 3. 配置依赖
-
-  ```bash
-  make configuration
-  ```
-
-#### 4. 进行编译
+#### 3. 进行编译
 
   ```bash
   make build
