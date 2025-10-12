@@ -55,6 +55,6 @@ func serve() error {
 		return err
 	}
 
-	fmt.Println("Server starting on :%d", port)
+	fmt.Printf("Server starting on :%d\n", port)
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
