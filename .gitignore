@@ -7,3 +7,6 @@
 src/dnspy_result_*
 
 *.bak.*
+
+# release files
+src/dnspy-*

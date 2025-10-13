@@ -2,10 +2,7 @@ all: run
 
 build-frontend:
 	@echo building frontend...
-	cd web
-	pnpm install
-	pnpm build
-	cd ..
+	cd web && pnpm install &&pnpm build
 
 build: build-frontend
 	@echo building dnsbenchmark...
