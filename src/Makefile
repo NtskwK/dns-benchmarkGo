@@ -7,12 +7,12 @@ build-frontend:
 build: build-frontend
 	@echo building dnsbenchmark...
 	go mod tidy
-	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-darwin-amd64 .
-	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -tags release -o dnspy-darwin-arm64 .
-	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-linux-amd64 .
-	GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -tags release -o dnspy-linux-arm64 .
-	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -tags release -o dnspy-windows-amd64.exe .
-	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -tags release -o dnspy-windows-arm64.exe .
+	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-darwin-amd64 .
+	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-darwin-arm64 .
+	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-linux-amd64 .
+	GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-linux-arm64 .
+	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-windows-amd64.exe .
+	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-windows-arm64.exe .
 
 run:
 	go run .
