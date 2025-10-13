@@ -205,7 +205,22 @@ func main() {
 	var input string
 	fmt.Scanln(&input)
 	if input == "Y" || input == "y" || input == "" {
-		err := open.Run("https://bench.dash.2020818.xyz")
+
+		// port, err := findSafePort(8000, 8080)
+		// if err != nil {
+		// 	log.WithError(err).Error("Error finding available port:", err)
+		// }
+		port := 8007
+		url := "http://localhost:" + fmt.Sprint(port)
+
+		log.Info("Opening browser at:", url)
+		err = open.Run(url)
+		if err != nil {
+			log.WithError(err).Error("无法打开默认浏览器")
+		}
+
+		err = ServeOn(port)
+
 		if err != nil {
 			log.WithError(err).Error("无法打开可视化数据分析网站")
 		}
