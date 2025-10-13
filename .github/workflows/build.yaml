@@ -107,6 +107,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4.1.0
+        with:
+          version: latest
 
       - name: Set node LTS
         uses: actions/setup-node@v4
