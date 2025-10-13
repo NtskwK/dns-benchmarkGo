@@ -24,7 +24,6 @@ var (
 	WorkDir        string
 	TempDir        string
 	DomainsBinPath string
-	DnspyreBinPath string
 	Servers        []string
 	OutputPath     string
 	OutputFile     *os.File
@@ -133,16 +132,6 @@ func main() {
 
 	log.Infof("需要测试的服务器数量: %d", len(Servers))
 
-	// 导出 dnspyre 二进制文件
-	dnspyreBinData, filename := GetDnspyreBin()
-	DnspyreBinPath = filepath.Join(TempDir, filename)
-	err = os.WriteFile(DnspyreBinPath, dnspyreBinData, 0755)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"错误": err,
-		}).Fatal("\x1b[31m无法写入 dnspyre 二进制文件\x1b[0m")
-	}
-
 	serverCount := len(Servers)
 	// 检查是否有有效数据
 	if Cfg.Workers == 0 || serverCount == 0 {
@@ -160,7 +149,7 @@ func main() {
 	// 单线程测试
 	if Cfg.Workers == 1 {
 		for _, server := range Servers {
-			output := runDnspyre(GeoDB, Cfg.PreferIPv4, Cfg.NoAAAARecord, DnspyreBinPath, server, DomainsBinPath, Cfg.Duration, Cfg.Concurrency, randomNum)
+			output := runDnspyre(GeoDB, Cfg.PreferIPv4, Cfg.NoAAAARecord, server, DomainsBinPath, Cfg.Duration, Cfg.Concurrency, randomNum)
 			RetData[server] = output
 		}
 	} else {
@@ -174,7 +163,7 @@ func main() {
 			go func(srv string) {
 				defer wg.Done()
 				defer func() { <-semaphore }()
-				output := runDnspyre(GeoDB, Cfg.PreferIPv4, Cfg.NoAAAARecord, DnspyreBinPath, srv, DomainsBinPath, Cfg.Duration, Cfg.Concurrency, randomNum)
+				output := runDnspyre(GeoDB, Cfg.PreferIPv4, Cfg.NoAAAARecord, srv, DomainsBinPath, Cfg.Duration, Cfg.Concurrency, randomNum)
 				mu.Lock() // 加锁
 				RetData[srv] = output
 				mu.Unlock() // 解锁
