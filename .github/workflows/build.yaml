@@ -109,23 +109,30 @@ jobs:
 
       - name: Install
         run: pnpm install
-        working-directory: ./src/web
+        working-directory: ./web
 
       - name: Build Frontend
         run: pnpm build
-        working-directory: ./src/web
+        working-directory: ./web
 
       - name: Build
         shell: bash
         run: |
-          cd src
           go build -ldflags "-s -w" -tags release -o release/dnsBenchmark-${{ matrix.name }}-${{ matrix.arch }} .
 
       - uses: actions/upload-artifact@v4
+        if: matrix.name == 'windows'
+        with:
+          name: dnsBenchmark-${{ matrix.name }}-${{ matrix.arch }}.exe
+          if-no-files-found: error
+          path: "release"
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.name != 'windows'
         with:
           name: dnsBenchmark-${{ matrix.name }}-${{ matrix.arch }}
           if-no-files-found: error
-          path: "src/release"
+          path: "release"
 
   changelog:
     name: Generate changelog

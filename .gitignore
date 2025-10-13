@@ -9,4 +9,6 @@ src/dnspy_result_*
 *.bak.*
 
 # release files
-src/release/*
+release/*
+
+dnspy_result_*.json

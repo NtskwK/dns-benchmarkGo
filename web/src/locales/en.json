@@ -1,0 +1,54 @@
+{
+  "title": "DNSPY Dashboard",
+  "tip": {
+    "github": "Project Repository",
+    "language": "Switch Language",
+    "theme": "Switch Theme",
+    "upload": "Upload the test result file of dnspy, and analyze it on the website",
+    "please_upload_file": "Please upload a json result file, the file name is like dnspy_result_2024-11-07-17-32-13.json. Or click the sample button to use sample data",
+    "clear": "Clear current data",
+    "sample": "Use Sample Data",
+    "search_region": "Search region",
+    "filters": "Filter",
+    "no_region_selected": "No region selected",
+    "copied": "Server IP copied to clipboard",
+    "copy_failed": "Copy failed",
+    "data_loaded": "Data loaded",
+    "data_loaded_desc": "Click on the bar of the data to copy the server address",
+    "preloaded_data_desc": "Server preloaded data has been automatically loaded",
+    "data_load_failed": "Data load failed",
+    "data_load_failed_desc": "Please check if the file format is correct",
+    "invalid_file_type": "File type error",
+    "only_json_allowed": "Only json files are allowed",
+    "showing_limited_data": "{{count}} items",
+    "total_items": "Total {{total}} items",
+    "back_to_top": "Back to Top",
+    "quick_filter": "Quick Filter",
+    "manual_select": "Manual Select",
+    "server_type": "Server Type"
+  },
+  "button": {
+    "upload": "Read and Analyze",
+    "clear": "Clear Data",
+    "select_all": "Select All",
+    "clear_all": "Clear",
+    "sample": "Sample"
+  },
+  "score": {
+    "scores": "Total Score",
+    "desc_scores": "Total score high, the better the overall performance. Click on the bar of the data to copy the server address",
+    "latencies": "Average Latency",
+    "desc_latencies": "Average latency(ms) low, the faster the query result returns. Click on the bar of the data to copy the server address",
+    "successRates": "Success Rate",
+    "desc_successRates": "Success rate(%) high, the higher the success rate. Click on the bar of the data to copy the server address",
+    "qps": "QPS",
+    "desc_qps": "QPS(Queries Per Second) high, the faster the query speed. Click on the bar of the data to copy the server address"
+  },
+  "region": {
+    "asia": "Asia Pacific",
+    "americas": "Americas",
+    "europe": "Europe",
+    "china": "China",
+    "global": "CDN"
+  }
+}
