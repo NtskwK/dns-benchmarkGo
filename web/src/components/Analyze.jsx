@@ -417,7 +417,7 @@ export default function Analyze() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 计��总页数
+  // 计算总页数
   const totalPages = useMemo(() => {
     if (!chartData?.[selectedChart]?.labels) return 1;
     const totalItems = Object.keys(filteredData).length;

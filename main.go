@@ -215,7 +215,7 @@ func main() {
 			log.WithError(err).Error("无法打开默认浏览器")
 		}
 
-		err = ServeOn(port)
+		err = ServeOn(port, retDataString)
 
 		if err != nil {
 			log.WithError(err).Error("无法打开可视化数据分析网站")
