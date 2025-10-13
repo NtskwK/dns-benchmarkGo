@@ -1,10 +1,10 @@
-package main
+package utils
 
 import (
 	"math"
 )
 
-type scoreResult struct {
+type ScoreResult struct {
 	Total       float64 `json:"total"`
 	SuccessRate float64 `json:"successRate"`
 	ErrorRate   float64 `json:"errorRate"`
@@ -29,10 +29,10 @@ const (
 )
 
 // 定义错误值
-var ErrNoRequests = scoreResult{}
+var ErrNoRequests = ScoreResult{}
 
 // ScoreBenchmarkResult 计算 DNS 服务器的评分
-func ScoreBenchmarkResult(r jsonResult) scoreResult {
+func ScoreBenchmarkResult(r JsonResult) ScoreResult {
 	// 检查成功响应数是否为 0
 	if r.TotalSuccessResponses == 0 {
 		return ErrNoRequests
@@ -85,7 +85,7 @@ func ScoreBenchmarkResult(r jsonResult) scoreResult {
 		qpsScore*QpsScoreWeight) / 100
 
 	// 返回评分结果
-	return scoreResult{
+	return ScoreResult{
 		Total:       Round(totalScore, 2),
 		SuccessRate: Round(successRateScore, 2),
 		ErrorRate:   Round(errorRateScore, 2),

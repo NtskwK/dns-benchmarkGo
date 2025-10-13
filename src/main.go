@@ -13,6 +13,7 @@ import (
 	"github.com/oschwald/geoip2-golang"
 	log "github.com/sirupsen/logrus"
 	"github.com/skratchdot/open-golang/open"
+	"github.com/xxnuo/dns-benchmark/dnspy/utils"
 )
 
 const TemplateHTMLPlaceholder = "__JSON_DATA_PLACEHOLDER__"
@@ -27,7 +28,7 @@ var (
 	Servers        []string
 	OutputPath     string
 	OutputFile     *os.File
-	RetData        BenchmarkResult
+	RetData        utils.BenchmarkResult
 )
 
 func main() {
@@ -118,10 +119,10 @@ func main() {
 	// 读取服务器列表文件
 	if Cfg.ServersDataPath == "@sampleServers@" {
 		serversData, _ := GetSampleServersData()
-		Servers, err = FormatListData(&serversData)
+		Servers, err = utils.FormatListData(&serversData)
 	} else {
 		if Cfg.ServersDataPath != "" {
-			Servers, err = FormatListFile(Cfg.ServersDataPath)
+			Servers, err = utils.FormatListFile(Cfg.ServersDataPath)
 			if err != nil {
 				log.WithFields(log.Fields{
 					"错误": err,
@@ -139,12 +140,12 @@ func main() {
 	}
 
 	// 初始化测试结果
-	RetData = make(map[string]jsonResult, serverCount)
+	RetData = make(map[string]utils.JsonResult, serverCount)
 	var mu sync.Mutex // 添加互斥锁
 
 	// 生成0到1之间的随机小数，保留两位小数
 	randomGenerator := rand.New(rand.NewSource(nowTime.UnixNano()))
-	randomNum := Round(randomGenerator.Float64(), 2)
+	randomNum := utils.Round(randomGenerator.Float64(), 2)
 
 	// 单线程测试
 	if Cfg.Workers == 1 {

@@ -1,10 +1,51 @@
-package main
+package utils
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/json"
+	"fmt"
+	"math"
+	"os"
+	"strings"
 )
 
-type latencyStats struct {
+// FormatListFile 格式化列表文件
+func FormatListFile(path string) ([]string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("读取文件失败: %w", err)
+	}
+	return FormatListData(&data)
+}
+
+// FormatListData 格式化列表字节
+func FormatListData(data *[]byte) ([]string, error) {
+	lines := make([]string, 0, 100) // 预分配容量，减少内存分配
+	scanner := bufio.NewScanner(bytes.NewReader(*data))
+	scanner.Buffer(make([]byte, 4096), 1048576) // 设置更大的缓冲区
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line != "" && !strings.HasPrefix(line, "#") {
+			lines = append(lines, line)
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("扫描数据失败: %w", err)
+	}
+
+	return lines, nil
+}
+
+// Round 四舍五入
+func Round(x float64, precision int) float64 {
+	scale := math.Pow10(precision)
+	return math.Round(x*scale) / scale
+}
+
+type LatencyStats struct {
 	MinMs  int64 `json:"minMs"`
 	MeanMs int64 `json:"meanMs"`
 	StdMs  int64 `json:"stdMs"`
@@ -16,7 +57,7 @@ type latencyStats struct {
 	P50Ms  int64 `json:"p50Ms"`
 }
 
-type jsonResult struct {
+type JsonResult struct {
 	// 用到了的 dnspyre 输出 JSON 格式的字段结构体定义
 	TotalRequests            int64            `json:"totalRequests"`
 	TotalSuccessResponses    int64            `json:"totalSuccessResponses"`
@@ -29,16 +70,16 @@ type jsonResult struct {
 	QuestionTypes            map[string]int64 `json:"questionTypes"`
 	QueriesPerSecond         float64          `json:"queriesPerSecond"`
 	BenchmarkDurationSeconds float64          `json:"benchmarkDurationSeconds"`
-	LatencyStats             latencyStats     `json:"latencyStats"`
+	LatencyStats             LatencyStats     `json:"latencyStats"`
 
 	// add:地理信息
 	IPAddress string      `json:"ip"`
 	Geocode   string      `json:"geocode"`
-	Score     scoreResult `json:"score"`
+	Score     ScoreResult `json:"score"`
 }
 
 // 自定义 BenchmarkResult 类型，用于 JSON 序列化
-type BenchmarkResult map[string]jsonResult
+type BenchmarkResult map[string]JsonResult
 
 func (b *BenchmarkResult) String() (string, error) {
 	jsonData, err := json.Marshal(b)

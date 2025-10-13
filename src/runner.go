@@ -9,10 +9,11 @@ import (
 	"github.com/oschwald/geoip2-golang"
 	log "github.com/sirupsen/logrus"
 	"github.com/tantalor93/dnspyre/v3/pkg/dnsbench"
+	"github.com/xxnuo/dns-benchmark/dnspy/utils"
 )
 
 // 具体工作实现
-func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, domainsPath string, duration, concurrency int, probability float64) jsonResult {
+func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, domainsPath string, duration, concurrency int, probability float64) utils.JsonResult {
 
 	log.WithFields(log.Fields{
 		"目标": server,
@@ -27,7 +28,7 @@ func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, doma
 			"目标": server,
 			"错误": err,
 		}).Errorf("\x1b[31m%s 解析失败\x1b[0m", server)
-		return jsonResult{}
+		return utils.JsonResult{}
 	} else {
 		log.WithFields(log.Fields{
 			"目标": server,
@@ -78,7 +79,7 @@ func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, doma
 			"目标": server,
 			"错误": err,
 		}).Errorf("\x1b[31m%s 测试失败\x1b[0m", server)
-		return jsonResult{}
+		return utils.JsonResult{}
 	}
 
 	// 转换结果为 JSON 格式
@@ -89,7 +90,7 @@ func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, doma
 	result.IPAddress = ip
 
 	// 打分
-	result.Score = ScoreBenchmarkResult(result)
+	result.Score = utils.ScoreBenchmarkResult(result)
 
 	if result.Score.Total == 0 {
 		log.WithFields(log.Fields{
@@ -109,8 +110,8 @@ func runDnspyre(geoDB *geoip2.Reader, preferIPv4 bool, noAAAA bool, server, doma
 	return result
 }
 
-// convertDnspyreResult 将 dnspyre 的 ResultStats 转换为 jsonResult
-func convertDnspyreResult(stats []*dnsbench.ResultStats, benchDuration time.Duration) jsonResult {
+// convertDnspyreResult 将 dnspyre 的 ResultStats 转换为 utils.JsonResult
+func convertDnspyreResult(stats []*dnsbench.ResultStats, benchDuration time.Duration) utils.JsonResult {
 	// 合并所有 stats
 	var totalCounters dnsbench.Counters
 	qtypeTotals := make(map[string]int64)
@@ -145,23 +146,23 @@ func convertDnspyreResult(stats []*dnsbench.ResultStats, benchDuration time.Dura
 	}
 
 	// 构建结果
-	result := jsonResult{
-		TotalRequests:           totalCounters.Total,
-		TotalSuccessResponses:   totalCounters.Success,
-		TotalNegativeResponses:  totalCounters.Negative,
-		TotalErrorResponses:     totalCounters.Error,
-		TotalIOErrors:           totalCounters.IOError,
-		TotalIDmismatch:         totalCounters.IDmismatch,
-		TotalTruncatedResponses: totalCounters.Truncated,
-		QuestionTypes:           qtypeTotals,
-		QueriesPerSecond:        math.Round(float64(totalCounters.Total)/benchDuration.Seconds()*100) / 100,
+	result := utils.JsonResult{
+		TotalRequests:            totalCounters.Total,
+		TotalSuccessResponses:    totalCounters.Success,
+		TotalNegativeResponses:   totalCounters.Negative,
+		TotalErrorResponses:      totalCounters.Error,
+		TotalIOErrors:            totalCounters.IOError,
+		TotalIDmismatch:          totalCounters.IDmismatch,
+		TotalTruncatedResponses:  totalCounters.Truncated,
+		QuestionTypes:            qtypeTotals,
+		QueriesPerSecond:         math.Round(float64(totalCounters.Total)/benchDuration.Seconds()*100) / 100,
 		BenchmarkDurationSeconds: roundDuration(benchDuration).Seconds(),
 	}
 
 	// 添加延迟统计
 	if mergedHist != nil && mergedHist.Hist != nil {
 		hist := mergedHist.Hist
-		result.LatencyStats = latencyStats{
+		result.LatencyStats = utils.LatencyStats{
 			MinMs:  roundDuration(time.Duration(hist.Min())).Milliseconds(),
 			MeanMs: roundDuration(time.Duration(hist.Mean())).Milliseconds(),
 			StdMs:  roundDuration(time.Duration(hist.StdDev())).Milliseconds(),

@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 	"testing"
+
+	"github.com/xxnuo/dns-benchmark/dnspy/utils"
 )
 
 func TestFormatListFile(t *testing.T) {
@@ -21,7 +23,7 @@ func TestFormatListFile(t *testing.T) {
 	tempFile.Close()
 
 	// 测试 FormatListFile 函数
-	result, err := FormatListFile(tempFile.Name())
+	result, err := utils.FormatListFile(tempFile.Name())
 	if err != nil {
 		t.Fatalf("FormatListFile 失败: %v", err)
 	}
@@ -40,7 +42,7 @@ func TestFormatListFile(t *testing.T) {
 
 func TestFormatListData(t *testing.T) {
 	testData := []byte("line1\n  line2  \n# comment\n\nline3")
-	result, err := FormatListData(&testData)
+	result, err := utils.FormatListData(&testData)
 	if err != nil {
 		t.Fatalf("FormatListData 失败: %v", err)
 	}
