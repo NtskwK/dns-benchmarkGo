@@ -51,6 +51,9 @@ func AloneFunc_GenSampleServersIPCode(geoDB *geoip2.Reader, rawFilePath, outFile
 			continue
 		}
 		ip, code, err := CheckGeo(geoDB, line, true)
+		if err != nil {
+			log.Fatalf("解析失败: %v", err)
+		}
 		_, err = writer.WriteString(line + "," + ip + "," + code + ";")
 		if err != nil {
 			log.Fatalf("写入输出文件时发生错误: %v", err)
