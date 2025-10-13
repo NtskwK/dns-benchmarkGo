@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"sync"
 	"time"
 
@@ -185,10 +184,6 @@ func main() {
 		}).Fatal("\x1b[31m无法将测试结果转换为 JSON 字符串\x1b[0m")
 	}
 
-	if Cfg.OldIsToHTML {
-		OutputHTML(OutputPath, retDataString)
-	}
-
 	// 输出 JSON 文件
 	_, err = OutputFile.WriteString(retDataString)
 	if err != nil {
@@ -224,40 +219,6 @@ func main() {
 
 		if err != nil {
 			log.WithError(err).Error("无法打开可视化数据分析网站")
-		}
-	}
-}
-
-func OutputHTML(path string, resultString string) {
-	htmlFilePath := path[:len(path)-5] + ".html"
-	htmlFile, err := os.Create(htmlFilePath)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"错误": err,
-		}).Fatal("\x1b[31m无法创建 HTML 文件\x1b[0m")
-	}
-	defer htmlFile.Close()
-	htmlTemplateData, _ := GetTemplateHTML()
-	htmlTemplate := strings.Replace(string(htmlTemplateData), TemplateHTMLPlaceholder, resultString, 1)
-
-	_, err = htmlFile.WriteString(htmlTemplate)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"错误":   err,
-			"输出文件": path,
-		}).Fatal("\x1b[31m无法写入输出文件\x1b[0m")
-	}
-	log.WithFields(log.Fields{
-		"输出文件": path,
-	}).Info("\x1b[32m测试结果已输出到文件\x1b[0m")
-
-	log.Info("是否使用默认浏览器打开 HTML 输出的文件[Y/n]")
-	var input string
-	fmt.Scanln(&input)
-	if input == "Y" || input == "y" || input == "" {
-		err := open.Run(htmlFilePath)
-		if err != nil {
-			log.WithError(err).Error("无法打开输出文件")
 		}
 	}
 }
