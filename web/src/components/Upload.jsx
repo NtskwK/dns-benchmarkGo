@@ -1,7 +1,6 @@
 import { Tooltip, Button } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { useFile } from "../contexts/FileContext";
-import SampleData from "./SampleData";
 
 export default function Upload() {
   const { t } = useTranslation();
@@ -21,8 +20,8 @@ export default function Upload() {
   };
 
   const handleLoadSample = () => {
-    setJsonData(SampleData);
-    localStorage.setItem("dnsAnalyzerData", JSON.stringify(SampleData));
+    // setJsonData(SampleData);
+    // localStorage.setItem("dnsAnalyzerData", JSON.stringify(SampleData));
   };
 
   return (
