@@ -142,3 +142,8 @@ operable program or batch file.
   ```bash
   make build
   ```
+
+## Thanks
+
+- [dns-benchmark](https://github.com/xxnuo/dns-benchmark)
+- [dnspyre](https://github.com/Tantalor93/dnspyre)
