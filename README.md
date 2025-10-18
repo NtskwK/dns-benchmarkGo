@@ -1,16 +1,18 @@
-# dnspy - 用于本地测试全世界的 DNS 服务器的可访问性和性能的测试工具
+# dnspy 
+
+一款用于本地测试全世界的 DNS 服务器的可访问性和性能的测试工具
 
 [English](./README.en.md) | [中文](./README.md)
 
-苦于国内的 DNS 被运营商劫持，需要可靠的服务来支持正常的上网。
+使用 Golang 编写支持 Windows、macOS、Linux。
 
-现有的工具不多，有 dnsjumper 存在仅支持 Windows、数据源较少、评测维度少的问题
+并且附带可视化分析网站让你一目了然的知道可以用哪些 DNS 服务器😊。（调用系统设置的默认浏览器）
 
-所以做了个工具来测试一下本地网络能正常使用的服务器以及服务器的性能的工具，使用 Golang 编写支持 Windows、macOS、Linux。
+使用方法：点击运行即可。（Web dashboard is not support on GUI-less Linux）
 
-并且附带可视化分析网站让你一目了然的知道可以用哪些 DNS 服务器😊，温馨提示：点击数据分析面板的柱状图即可复制服务器地址
+**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
 
-使用方法：按下文指导下载测试工具获得测试结果的 json 文件，打开分析面板网站上传数据分析即可。网站不存储数据。
+> 若出现多个服务器的测试延迟为小于5ms，请排查网络服务是否被当地运营商劫持的可能。
 
 ## 数据分析面板预览
 
@@ -23,10 +25,6 @@
 ![dnspy](https://github.com/user-attachments/assets/a499d2fc-ffcd-4b71-a0dd-d6e5839792dd)
 
 在本仓库的 [releases](https://github.com/xxnuo/dns-benchmark/releases) 页面中按你的系统架构下载 `dnspy-*` 文件，比如 M 系列处理器的 macOS，所以下载 `dnspy-darwin-arm64` 文件。
-
-然后**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
-然后**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
-然后**必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
 
 重命名文件为 `dnspy`（Windows 是 `dnspy.exe`），然后打开终端，进入到你这个文件所在的目录。执行命令开始测试
 
