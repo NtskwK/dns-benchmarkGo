@@ -10,16 +10,12 @@
       "request": "launch",
       "mode": "auto",
       "program": "${fileDirname}",
-      "args": ["-s", "180.131.144.144", "-s", "114.114.114.114"],
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Go 旧版输出 HTML",
-      "type": "go",
-      "request": "launch",
-      "mode": "auto",
-      "program": "${fileDirname}",
-      "args": ["--old-html", "./dnspy_result_2024-10-22-13-56-22.json"],
+      "args": [
+        "-s",
+        "180.131.144.144",
+        "-s",
+        "114.114.114.114"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -28,7 +24,10 @@
       "request": "launch",
       "mode": "auto",
       "program": "${fileDirname}",
-      "args": ["--geo", "localhost:853"],
+      "args": [
+        "--geo",
+        "localhost:853"
+      ],
       "console": "integratedTerminal"
     }
   ]
