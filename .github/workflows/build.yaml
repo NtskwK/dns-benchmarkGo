@@ -168,7 +168,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v2.2.2
         with:
-          files: release/*
+          files: release/*/*
           tag_name: ${{ needs.meta.outputs.tag }}
           body: ${{ needs.changelog.outputs.release_body }}
           draft: false
