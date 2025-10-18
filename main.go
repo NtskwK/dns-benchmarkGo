@@ -120,6 +120,11 @@ func main() {
 	if Cfg.ServersDataPath == "@sampleServers@" {
 		serversData, _ := GetSampleServersData()
 		Servers, err = utils.FormatListData(&serversData)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"Error": err,
+			}).Panic("Sample servers data is invalid")
+		}
 	} else {
 		if Cfg.ServersDataPath != "" {
 			Servers, err = utils.FormatListFile(Cfg.ServersDataPath)
