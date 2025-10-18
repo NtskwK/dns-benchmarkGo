@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -200,25 +201,28 @@ func main() {
 	log.Info("是否使用默认浏览器打开可视化数据分析网站[Y/n]")
 	var input string
 	fmt.Scanln(&input)
-	if input == "Y" || input == "y" || input == "" {
+	input = strings.ToLower(strings.TrimSpace(input))
 
-		// port, err := findSafePort(8000, 8080)
-		// if err != nil {
-		// 	log.WithError(err).Error("Error finding available port:", err)
-		// }
-		port := 8007
-		url := "http://localhost:" + fmt.Sprint(port)
-
-		log.Info("Opening browser at:", url)
-		err = open.Run(url)
-		if err != nil {
-			log.WithError(err).Error("无法打开默认浏览器")
-		}
-
-		err = ServeOn(port, retDataString)
-
-		if err != nil {
-			log.WithError(err).Error("无法打开可视化数据分析网站")
-		}
+	if input == "n" {
+		log.Info("Exiting without opening browser.")
 	}
+
+	// 打开本地服务器网页
+	port := 8007
+	url := "http://localhost:" + fmt.Sprint(port)
+
+	log.Info("Opening browser at: ", url)
+	err = open.Run(url)
+	if err != nil {
+		log.WithError(err).Error("无法打开默认浏览器")
+	}
+
+	err = ServeOn(port, retDataString)
+
+	if err != nil {
+		log.WithError(err).Error("无法打开可视化数据分析网站")
+	}
+
+	log.Info("Benchmark complete.")
+
 }
