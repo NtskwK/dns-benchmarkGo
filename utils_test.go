@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/xxnuo/dns-benchmark/dnspy/utils"
+	"github.com/NtskwK/dns-benchmarkGo/utils"
 )
 
 func TestFormatListFile(t *testing.T) {

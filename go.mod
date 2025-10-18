@@ -1,4 +1,4 @@
-module github.com/xxnuo/dns-benchmark/dnspy
+module github.com/NtskwK/dns-benchmarkGo
 
 go 1.23.2
 

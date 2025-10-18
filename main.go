@@ -10,10 +10,10 @@ import (
 
 	"math/rand"
 
+	"github.com/NtskwK/dns-benchmarkGo/utils"
 	"github.com/oschwald/geoip2-golang"
 	log "github.com/sirupsen/logrus"
 	"github.com/skratchdot/open-golang/open"
-	"github.com/xxnuo/dns-benchmark/dnspy/utils"
 )
 
 const TemplateHTMLPlaceholder = "__JSON_DATA_PLACEHOLDER__"

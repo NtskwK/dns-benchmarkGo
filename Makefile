@@ -7,12 +7,12 @@ build-frontend:
 build: build-frontend
 	@echo building dnsbenchmark...
 	go mod tidy
-	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-darwin-amd64 .
-	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-darwin-arm64 .
-	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-linux-amd64 .
-	GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-linux-arm64 .
-	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dnspy-windows-amd64.exe .
-	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dnspy-windows-arm64.exe .
+	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-darwin-amd64 .
+	GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-darwin-arm64 .
+	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-linux-amd64 .
+	GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-linux-arm64 .
+	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-windows-amd64.exe .
+	GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -tags release -o release/dns-benchmarkGo-windows-arm64.exe .
 
 run:
 	go run .
@@ -24,6 +24,7 @@ update-geodata:
 update-domains:
 	@echo updating domain data...
 	curl https://cdn.jsdelivr.net/gh/Tantalor93/dnspyre@master/data/10000-domains -o ./res/domains.txt
+	cd res && python sort.py
 
 update-dnspyre:
 	@echo updating dnspyre submodule...

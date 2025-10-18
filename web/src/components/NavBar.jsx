@@ -22,7 +22,7 @@ export default function NavBar() {
         <NavbarContent justify="end">
           <NavbarItem>
             <Tooltip content={t("tip.github")}>
-              <Link href="https://github.com/xxnuo/dns-benchmark" target="_blank">
+              <Link href="https://github.com/NtskwK/dns-benchmarkGo" target="_blank">
                 <Button variant="ghost" aria-label={t("tip.github")}>
                   <GithubIcon />
                   <span className="ml-2">{t("tip.github")}</span>

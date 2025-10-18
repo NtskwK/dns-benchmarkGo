@@ -6,10 +6,10 @@ import (
 	"math"
 	"time"
 
+	"github.com/NtskwK/dns-benchmarkGo/utils"
 	"github.com/oschwald/geoip2-golang"
 	log "github.com/sirupsen/logrus"
 	"github.com/tantalor93/dnspyre/v3/pkg/dnsbench"
-	"github.com/xxnuo/dns-benchmark/dnspy/utils"
 )
 
 // 具体工作实现

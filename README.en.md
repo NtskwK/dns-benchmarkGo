@@ -22,7 +22,7 @@ Usage: Follow the instructions below to download the testing tool, get the test 
 
 ![dnspy](https://github.com/user-attachments/assets/a499d2fc-ffcd-4b71-a0dd-d6e5839792dd)
 
-Download the `dnspy-*` file according to your system architecture from the [releases](https://github.com/xxnuo/dns-benchmark/releases) page in this repository. For example, for macOS with M series processors, download the `dnspy-darwin-arm64` file.
+Download the `dns-benchmarkGo-*` file according to your system architecture from the [releases](https://github.com/NtskwK/dns-benchmarkGo/releases) page in this repository. For example, for macOS with M series processors, download the `dnspy-darwin-arm64` file.
 
 Then **you must disable all proxy software's Tun mode and virtual network card mode, otherwise it will affect the test results.**
 Then **you must disable all proxy software's Tun mode and virtual network card mode, otherwise it will affect the test results.**
@@ -49,7 +49,7 @@ Enter `Y` or `y` or just press Enter as prompted by the program, and the data an
 #### 1. Clone repository and initialize submodules
 
   ```bash
-  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  git clone --recurse-submodules https://github.com/NtskwK/dns-benchmarkGo.git
   cd dns-benchmark/src
   ```
 
@@ -144,7 +144,7 @@ operable program or batch file.
 
   ```bash
   # Clone this repository (including submodules)
-  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
+  git clone --recurse-submodules https://github.com/NtskwK/dns-benchmarkGo.git
   cd dns-benchmark/src
   ```
 

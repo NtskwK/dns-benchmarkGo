@@ -8,7 +8,7 @@
 
 并且附带可视化分析网站让你一目了然的知道可以用哪些 DNS 服务器😊。（调用系统设置的默认浏览器）
 
-使用方法：点击运行即可。（Web dashboard is not support on GUI-less Linux）
+**Web dashboard is not support on GUI-less Linux**
 
 **必须关闭所有代理软件的 Tun 模式、虚拟网卡模式，否则会影响测试结果。**
 
@@ -24,19 +24,10 @@
 
 ![dnspy](https://github.com/user-attachments/assets/a499d2fc-ffcd-4b71-a0dd-d6e5839792dd)
 
-在本仓库的 [releases](https://github.com/xxnuo/dns-benchmark/releases) 页面中按你的系统架构下载 `dnspy-*` 文件，比如 M 系列处理器的 macOS，所以下载 `dnspy-darwin-arm64` 文件。
+在本仓库的 [releases](https://github.com/NtskwK/dns-benchmarkGo/releases) 页面中按你的系统架构进行下载后点击运行即可。
 
-重命名文件为 `dnspy`（Windows 是 `dnspy.exe`），然后打开终端，进入到你这个文件所在的目录。执行命令开始测试
-
-```bash
-unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
-./dnspy
-```
-
-按提示输入启动测试
-
-默认使用多线程模式，以加快测试速度。但是默认参数 10 个线程需要至少上下行 1 MB/s 网络和至少 4 核心处理器。
-如果网络或处理器不好，会导致测试结果不准确，必须通过`-w` 参数降低线程数。
+程序默认使用多线程模式，以加快测试速度。但是默认参数 10 个线程需要至少上下行 1 MB/s 网络和至少 4 核心处理器。
+如果网络或处理器不好，会导致测试结果不准确，请通过`-w` 参数降低线程数。
 
 测试完成后会输出到当前目录下形如 `dnspy_result_2024-11-07-17-32-13.json` 的 JSON 文件中。
 
@@ -47,8 +38,8 @@ unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
 #### 1. 克隆本仓库并初始化子模块
 
   ```bash
-  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
-  cd dns-benchmark/src
+  git clone --recurse-submodules https://github.com/NtskwK/dns-benchmarkGo.git
+  cd dns-benchmarkGo
   ```
 
   如果已经克隆了仓库，可以使用以下命令初始化子模块：
@@ -66,21 +57,7 @@ unset http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY
 ## 可用参数
 
 ```batch
-~> dnspy-windows-amd64.exe -h  
-
-使用示例:
-
-dnspy
-
-使用内置的世界所有域名直接启动测试
-
-dnspy -s 114.114.114.114
-
-测试单个服务器
-
-dnspy dnspy_benchmark_2024-10-22-08-18.json
-
-对测试结果进行可视化分析
+$dns-benchmarkGo --help
 
 参数说明:
   -c, --concurrency int   每个测试并发数
@@ -104,12 +81,6 @@ dnspy dnspy_benchmark_2024-10-22-08-18.json
                           可选 debug,info,warn,error,fatal,panic
                            (default "info")
       --no-aaaa           每个测试不解析 AAAA 记录
-
-      --old-html          已弃用不建议使用
-                          建议改用如 <示例1> 程序先直接解析输出数据 json 文件并按提示直接查看可视化数据分析
-                          如下次需要查看可视化数据分析可如 <示例3> 用程序打开 json 文件
-                          本参数使用旧版方式输出单个 HTML 文件到数据 json 同目录
-                          可双击打开查看
 
   -o, --output string     输出结果的文件路径
                           必须是相对当前程序工作路径的文件路径
@@ -142,8 +113,8 @@ operable program or batch file.
 
   ```bash
   # 克隆本仓库（包含子模块）
-  git clone --recurse-submodules https://github.com/xxnuo/dns-benchmark.git
-  cd dns-benchmark/src
+  git clone --recurse-submodules https://github.com/NtskwK/dns-benchmarkGo.git
+  cd dns-benchmarkGo
   ```
 
   如果已经克隆了仓库，可以使用以下命令初始化子模块：

@@ -43,14 +43,17 @@ func InitFlags() (Config, error) {
 	flag.StringVarP(&cfg.FnGeo, "geo", "g", "", "\x1b[32m独立功能: 使用 GeoIP 数据库进行 IP 或域名归属地查询\x1b[0m\n")
 	// 使用说明
 	flag.Usage = func() {
-		fmt.Print("使用示例:\n\n" +
-			"\x1b[33mdnspy\x1b[0m\n\n" +
-			"\x1b[32m使用内置的世界所有域名直接启动测试\x1b[0m\n\n" +
-			"\x1b[33mdnspy -s 114.114.114.114\x1b[0m\n\n" +
-			"\x1b[32m测试单个服务器\x1b[0m\n\n" +
-			"\x1b[33mdnspy dnspy_benchmark_2024-10-22-08-18.json\x1b[0m\n\n" +
-			"\x1b[32m对测试结果进行可视化分析\x1b[0m\n\n" +
-			"参数说明:\n")
+		fmt.Print(
+			"dns-benchmarkGo\n\n" +
+				"Homepage: https://github.com/NtskwK/dns-benchmarkGo\n\n" +
+				"使用示例:\n\n" +
+				"\x1b[33mdns-benchmarkGo\x1b[0m\n\n" +
+				"\x1b[32m使用内置的世界所有域名直接启动测试\x1b[0m\n\n" +
+				"\x1b[33mdns-benchmarkGo -s 114.114.114.114\x1b[0m\n\n" +
+				"\x1b[32m测试单个服务器\x1b[0m\n\n" +
+				"\x1b[33mdns-benchmarkGo dns-benchmarkGo_benchmark_2024-10-22-08-18.json\x1b[0m\n\n" +
+				"\x1b[32m对测试结果进行可视化分析\x1b[0m\n\n" +
+				"参数说明:\n")
 		flag.PrintDefaults()
 	}
 
