@@ -1,17 +1,22 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from "react";
+// @ts-check
+import { createContext, useContext, useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
-const FileContext = createContext();
+/** @type {React.Context<any>} */
+const FileContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "dnsAnalyzerData";
 
+/**
+ * @param {{ children: React.ReactNode }} props
+ */
 export function FileProvider({ children }) {
   const { t } = useTranslation();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(/** @type {File | null} */(null));
   const hasShownInitialToast = useRef(false);
 
-  const [jsonData, setJsonData] = useState(null)
+  const [jsonData, setJsonData] = useState(/** @type {any} */(null))
 
   useEffect(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -35,14 +40,29 @@ export function FileProvider({ children }) {
     }
   }, []);
 
-  const showToast = useCallback((type, title, desc) => {
-    toast[type](t(title), {
-      description: t(desc),
-      duration: type === 'error' ? 6000 : 5000,
-      className: "dark:text-neutral-200",
-      dismissible: true,
-    });
-  }, [t]);
+  const showToast = useCallback(
+    /**
+     * @param {'success' | 'error'} type
+     * @param {string} title
+     * @param {string} desc
+     */
+    (type, title, desc) => {
+      if (type === 'success') {
+        toast.success(t(title), {
+          description: t(desc),
+          duration: 5000,
+          className: "dark:text-neutral-200",
+          dismissible: true,
+        });
+      } else if (type === 'error') {
+        toast.error(t(title), {
+          description: t(desc),
+          duration: 6000,
+          className: "dark:text-neutral-200",
+          dismissible: true,
+        });
+      }
+    }, [t]);
 
 
   useEffect(() => {
@@ -57,7 +77,11 @@ export function FileProvider({ children }) {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const data = JSON.parse(e.target?.result);
+        const result = e.target?.result;
+        if (typeof result !== 'string') {
+          throw new Error('File content is not a string');
+        }
+        const data = JSON.parse(result);
         setJsonData(data);
         showToast('success', 'tip.data_loaded', 'tip.data_loaded_desc');
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
