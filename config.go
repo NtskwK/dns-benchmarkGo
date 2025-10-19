@@ -25,6 +25,9 @@ type Config struct {
 	// 功能参数
 	InputResultJsonPath string // 输入结果 json 文件路径,必须是相对当前程序工作路径的文件路径
 	FnGeo               string // 使用 GeoIP 数据库进行 IP 归属地查询
+	// Web 服务相关参数
+	StaticDirPath   string // 本地静态文件目录路径,用于服务如图片等静态资源
+	StaticURLPath   string // 静态文件服务的URL路径前缀,例如 /static/
 }
 
 func InitFlags() (Config, error) {
@@ -41,6 +44,10 @@ func InitFlags() (Config, error) {
 	flag.BoolVar(&cfg.NoAAAARecord, "no-aaaa", false, "\x1b[32m每个测试不解析 AAAA 记录\x1b[0m\n")
 	flag.StringVarP(&cfg.OutputPath, "output", "o", "", "\x1b[32m输出结果的文件路径\n必须是相对当前程序工作路径的文件路径\n不指定则输出到当前工作路径下的 dnspy_result_<当前时间>.json\x1b[0m\n")
 	flag.StringVarP(&cfg.FnGeo, "geo", "g", "", "\x1b[32m独立功能: 使用 GeoIP 数据库进行 IP 或域名归属地查询\x1b[0m\n")
+	// Web 服务相关参数
+	flag.StringVar(&cfg.StaticDirPath, "static-dir", "", "\x1b[32m本地静态文件目录路径\n用于服务如图片等静态资源,必须是相对当前程序工作路径的文件路径\x1b[0m\n")
+	flag.StringVar(&cfg.StaticURLPath, "static-url", "/static/", "\x1b[32m静态文件服务的URL路径前缀\n例如 /static/, 访问时会拼接此路径\x1b[0m\n")
+
 	// 使用说明
 	flag.Usage = func() {
 		fmt.Print(
