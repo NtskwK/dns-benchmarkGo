@@ -10,7 +10,11 @@ export default function ThemeSwitcher() {
   useEffect(() => {
     // 检查系统主题
     const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const updateTheme = (e: MediaQueryListEvent | MediaQueryList) => {
+    /**
+     * 更新主题
+     * @param {MediaQueryListEvent | MediaQueryList} e
+    */
+    const updateTheme = (e) => {
       setIsSelected(e.matches);
       document.documentElement.classList.toggle("dark", e.matches);
     };
