@@ -1,4 +1,4 @@
-# dnspy 
+# dns-benchmarkGo
 
 一款用于本地测试全世界的 DNS 服务器的可访问性和性能的测试工具
 

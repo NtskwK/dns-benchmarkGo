@@ -43,15 +43,3 @@ var DomainsData []byte
 func GetDomainsData() ([]byte, error) {
 	return DomainsData, nil
 }
-
-//go:embed res/template.html
-var TemplateHTMLData []byte
-
-// GetTemplateHTML 函数返回嵌入的HTML模板数据
-// 这个函数直接返回TemplateHTML字节切片，无需从文件系统读取
-// 返回值:
-//   - []byte: 返回包含HTML模板数据的字节切片
-//   - error: 始终返回nil，因为数据已经嵌入，不会发生读取错误
-func GetTemplateHTML() ([]byte, error) {
-	return TemplateHTMLData, nil
-}
