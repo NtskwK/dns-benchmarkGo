@@ -4,24 +4,13 @@ import { useFile } from "../contexts/FileContext";
 
 export default function Upload() {
   const { t } = useTranslation();
-  const { setFile, jsonData, setJsonData } = useFile();
+  const { setFile, jsonData } = useFile();
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
     if (file) {
       setFile(file);
     }
-  };
-
-  const handleClearData = () => {
-    setFile(null);
-    setJsonData(null);
-    localStorage.removeItem("dnsAnalyzerData");
-  };
-
-  const handleLoadSample = () => {
-    // setJsonData(SampleData);
-    // localStorage.setItem("dnsAnalyzerData", JSON.stringify(SampleData));
   };
 
   return (
@@ -32,20 +21,6 @@ export default function Upload() {
           {t("button.upload")}
         </Button>
       </Tooltip>
-
-      <Tooltip content={t("tip.sample")}>
-        <Button color="secondary" variant="flat" onClick={handleLoadSample}>
-          {t("button.sample")}
-        </Button>
-      </Tooltip>
-
-      {jsonData && (
-        <Tooltip content={t("tip.clear")}>
-          <Button color="danger" variant="flat" onClick={handleClearData}>
-            {t("button.clear")}
-          </Button>
-        </Tooltip>
-      )}
     </div>
   );
 }

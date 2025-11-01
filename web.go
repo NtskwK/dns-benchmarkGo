@@ -16,22 +16,13 @@ var indexJS []byte
 //go:embed web/dist/static/css/index.css
 var indexCSS []byte
 
-func injectLocalStorageScript(resultJson string) []byte {
-	script := fmt.Sprintf(`
-	<script>
-		localStorage.setItem("dnsAnalyzerData", %q); 
-	</script>`, resultJson)
-	return []byte(script)
-}
-
-func modifiedIndexHTML(resultJson string) []byte {
+func modifiedIndexHTML() []byte {
 	// 构建内联CSS和JS
 	cssInline := append(append([]byte(`<style>`), indexCSS...), []byte(`</style>`)...)
 	jsInline := append(append([]byte(`<script>`), indexJS...), []byte(`</script>`)...)
-	injectInline := injectLocalStorageScript(resultJson)
 
 	// 组合添加到body末尾
-	addition := append(cssInline, append(injectInline, jsInline...)...)
+	addition := append(cssInline, jsInline...)
 
 	// 替换</body>为 addition + </body>
 	modifiedIndexHTML := bytes.ReplaceAll(indexHTML, []byte(`</body>`), append(addition, []byte(`</body>`)...))
@@ -43,7 +34,11 @@ func ServeOn(port int, resultJson string) error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			w.Header().Set("Content-Type", "text/html")
-			w.Write(modifiedIndexHTML(resultJson))
+			w.Write(modifiedIndexHTML())
+			return
+		} else if r.URL.Path == "/api/data" {
+			w.Header().Set("Content-Type", "application/json")
+			w.Write([]byte(resultJson))
 			return
 		}
 	})
