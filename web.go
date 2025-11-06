@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	_ "embed"
 	"fmt"
 	"net/http"
@@ -16,25 +15,19 @@ var indexJS []byte
 //go:embed web/dist/static/css/index.css
 var indexCSS []byte
 
-func modifiedIndexHTML() []byte {
-	// 构建内联CSS和JS
-	cssInline := append(append([]byte(`<style>`), indexCSS...), []byte(`</style>`)...)
-	jsInline := append(append([]byte(`<script>`), indexJS...), []byte(`</script>`)...)
-
-	// 组合添加到body末尾
-	addition := append(cssInline, jsInline...)
-
-	// 替换</body>为 addition + </body>
-	modifiedIndexHTML := bytes.ReplaceAll(indexHTML, []byte(`</body>`), append(addition, []byte(`</body>`)...))
-
-	return modifiedIndexHTML
-}
-
 func ServeOn(port int, resultJson string) error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
 			w.Header().Set("Content-Type", "text/html")
-			w.Write(modifiedIndexHTML())
+			w.Write(indexHTML)
+			return
+		} else if r.URL.Path == "/static/js/index.js" {
+			w.Header().Set("Content-Type", "application/javascript")
+			w.Write(indexJS)
+			return
+		} else if r.URL.Path == "/static/css/index.css" {
+			w.Header().Set("Content-Type", "text/css")
+			w.Write(indexCSS)
 			return
 		} else if r.URL.Path == "/api/data" {
 			w.Header().Set("Content-Type", "application/json")
